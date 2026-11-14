@@ -146,7 +146,8 @@ class AdminProvider extends ChangeNotifier {
         formData.fields.add(const MapEntry('photo_path', 'uploads/photos/demo_after_chair.jpg'));
       }
 
-      await _api.dio.patch('/reports/$reportId/complete', data: formData);
+      // Use POST so PHP web servers parse multipart/form-data cleanly
+      await _api.dio.post('/reports/$reportId/complete', data: formData);
       await fetchReportQueue();
       await fetchDashboardStats();
       return true;

@@ -131,67 +131,219 @@ class _AdminQueueScreenState extends State<AdminQueueScreen> {
   void _showCompleteDialog(ReportModel report) {
     final noteController = TextEditingController(text: 'Perbaikan fasilitas selesai dilaksanakan dan diuji aman.');
     PickedPhoto? pickedPhoto;
+    bool isSubmitting = false;
 
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (ctx) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Tandai Selesai Diperbaiki', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: Row(
             children: [
-              Text('Penyelesaian tiket ${report.ticketNumber}'),
-              const SizedBox(height: 12),
-              TextField(
-                controller: noteController,
-                decoration: const InputDecoration(labelText: 'Catatan Perbaikan'),
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: AppColors.statusSelesai.withValues(alpha: 0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.check_circle_rounded, color: AppColors.statusSelesai, size: 22),
               ),
-              const SizedBox(height: 14),
-              const Text('Wajib Foto Bukti Perbaikan (After):', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-              const SizedBox(height: 8),
-              Row(
+              const SizedBox(width: 10),
+              const Text('Tandai Selesai Diperbaiki', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            ],
+          ),
+          content: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 460),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  OutlinedButton.icon(
-                    icon: const Icon(Icons.add_a_photo_outlined, size: 16),
-                    label: Text(pickedPhoto != null ? 'Foto Terpilih' : 'Unggah Foto Bukti'),
-                    onPressed: () async {
-                      final files = await FilePicker.pickFiles(
-                        type: FileType.custom,
-                        allowedExtensions: ['jpg', 'png', 'webp'],
-                      );
-                      if (files.isNotEmpty) {
-                        final bytes = await files.first.readAsBytes();
-                        setDialogState(() => pickedPhoto = PickedPhoto(name: files.first.name, bytes: bytes));
-                      }
-                    },
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF1F5F9),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      'Tiket: ${report.ticketNumber} • ${report.building} - ${report.room}',
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF334155)),
+                    ),
                   ),
-                  if (pickedPhoto != null) ...[
-                    const SizedBox(width: 8),
-                    const Icon(Icons.check_circle, color: AppColors.accent, size: 18),
+                  const SizedBox(height: 14),
+                  TextField(
+                    controller: noteController,
+                    maxLines: 2,
+                    decoration: InputDecoration(
+                      labelText: 'Catatan Perbaikan',
+                      hintText: 'Uraikan hasil perbaikan fasilitas...',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                      contentPadding: const EdgeInsets.all(12),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Foto Bukti Perbaikan (After):',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF1E293B)),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Area Upload Foto Bukti Perbaikan
+                  if (pickedPhoto == null) ...[
+                    InkWell(
+                      onTap: () async {
+                        try {
+                          final files = await FilePicker.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: ['jpg', 'jpeg', 'png', 'webp'],
+                          );
+                          if (files.isNotEmpty) {
+                            final file = files.first;
+                            final bytes = await file.readAsBytes();
+                            setDialogState(() {
+                              pickedPhoto = PickedPhoto(name: file.name, bytes: bytes);
+                            });
+                          }
+                        } catch (e) {
+                          debugPrint('File picker error: $e');
+                        }
+                      },
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF8FAFC),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: const Color(0xFFCBD5E1), style: BorderStyle.solid),
+                        ),
+                        child: Column(
+                          children: [
+                            const Icon(Icons.cloud_upload_outlined, size: 36, color: Color(0xFF2563EB)),
+                            const SizedBox(height: 6),
+                            const Text(
+                              'Klik untuk Unggah Foto Bukti Perbaikan',
+                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF1E3A8A)),
+                            ),
+                            const SizedBox(height: 2),
+                            const Text(
+                              'Format JPG, PNG, atau WebP (Maks. 3 MB)',
+                              style: TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ] else ...[
+                    // Foto Preview Card
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF0FDF4),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: const Color(0xFF86EFAC)),
+                      ),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.memory(
+                              pickedPhoto!.bytes,
+                              width: 64,
+                              height: 64,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: const [
+                                    Icon(Icons.check_circle_rounded, color: Color(0xFF16A34A), size: 16),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      'Foto Siap Diunggah',
+                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF15803D)),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  pickedPhoto!.name,
+                                  style: const TextStyle(fontSize: 11.5, color: Color(0xFF334155)),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete_outline_rounded, color: Colors.red, size: 20),
+                            tooltip: 'Hapus foto',
+                            onPressed: () {
+                              setDialogState(() => pickedPhoto = null);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ],
               ),
-            ],
+            ),
           ),
+          actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Batal')),
+            TextButton(
+              onPressed: isSubmitting ? null : () => Navigator.pop(ctx),
+              child: const Text('Batal'),
+            ),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: AppColors.statusSelesai),
-              onPressed: () async {
-                Navigator.pop(ctx);
-                final ok = await context.read<AdminProvider>().completeReport(
-                      report.id,
-                      noteController.text.trim(),
-                      pickedPhoto,
-                    );
-                if (ok && mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Laporan dinyatakan selesai diperbaiki!'), backgroundColor: AppColors.accent),
-                  );
-                }
-              },
-              child: const Text('Selesaikan Laporan'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.statusSelesai,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              ),
+              onPressed: isSubmitting
+                  ? null
+                  : () async {
+                      setDialogState(() => isSubmitting = true);
+                      final adminProv = context.read<AdminProvider>();
+                      final ok = await adminProv.completeReport(
+                        report.id,
+                        noteController.text.trim(),
+                        pickedPhoto,
+                      );
+
+                      if (mounted) {
+                        Navigator.pop(ctx);
+                        if (ok) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Laporan dinyatakan selesai diperbaiki! Bukti foto berhasil disimpan.'),
+                              backgroundColor: AppColors.statusSelesai,
+                              duration: Duration(seconds: 3),
+                            ),
+                          );
+                        } else {
+                          final err = adminProv.errorMessage ?? 'Gagal menyelesaikan laporan.';
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(err), backgroundColor: Colors.red),
+                          );
+                        }
+                      }
+                    },
+              child: isSubmitting
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                    )
+                  : const Text('Selesaikan Laporan', style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ],
         ),

@@ -93,9 +93,13 @@ $router->delete('/api/reports/{id}/upvote', [UpvoteController::class, 'cancelUpv
 
 // --- Admin (Sarpras) Routes ---
 $router->patch('/api/reports/{id}/verify',   [AdminController::class, 'verifyReport']);
+$router->post('/api/reports/{id}/verify',    [AdminController::class, 'verifyReport']);
 $router->patch('/api/reports/{id}/assign',   [AdminController::class, 'assignTechnician']);
+$router->post('/api/reports/{id}/assign',    [AdminController::class, 'assignTechnician']);
 $router->patch('/api/reports/{id}/complete', [AdminController::class, 'completeReport']);
+$router->post('/api/reports/{id}/complete',  [AdminController::class, 'completeReport']);
 $router->patch('/api/reports/{id}/reject',   [AdminController::class, 'rejectReport']);
+$router->post('/api/reports/{id}/reject',    [AdminController::class, 'rejectReport']);
 $router->get('/api/admin/stats',             [AdminController::class, 'stats']);
 $router->get('/api/admin/export',            [AdminController::class, 'exportCsv']);
 $router->get('/api/admin/technicians',       [AdminController::class, 'getTechnicians']);

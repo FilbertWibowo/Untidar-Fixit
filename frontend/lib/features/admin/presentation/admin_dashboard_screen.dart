@@ -160,44 +160,107 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     Expanded(
                       flex: isWide ? 1 : 0,
                       child: Card(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          side: const BorderSide(color: Color(0xFFE2E8F0)),
+                        ),
                         child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(18.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Gedung Paling Sering Mengalami Kerusakan', style: AppTypography.headingSmall(theme.colorScheme.onSurface).copyWith(fontSize: 14)),
-                              const SizedBox(height: 12),
-                              if (stats?.topBuildings != null)
-                                ...stats!.topBuildings.map((b) {
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(Icons.leaderboard_rounded, size: 18, color: Color(0xFFD97706)),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        'Gedung Paling Butuh Perhatian',
+                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0F172A)),
+                                      ),
+                                    ],
+                                  ),
+                                  const Text('Urut Aktif', style: TextStyle(fontSize: 11, color: Color(0xFF94A3B8))),
+                                ],
+                              ),
+                              const SizedBox(height: 14),
+                              if (stats?.topBuildings != null && (stats?.topBuildings.isNotEmpty ?? false))
+                                ...(stats?.topBuildings ?? []).asMap().entries.map((entry) {
+                                  final idx = entry.key;
+                                  final b = entry.value;
+                                  final activeCount = int.tryParse(b['active_reports']?.toString() ?? '0') ?? 0;
+                                  final rankColors = [
+                                    const Color(0xFFEF4444),
+                                    const Color(0xFFF97316),
+                                    const Color(0xFFF59E0B),
+                                    const Color(0xFF3B82F6),
+                                    const Color(0xFF64748B),
+                                  ];
+                                  final badgeColor = idx < rankColors.length ? rankColors[idx] : const Color(0xFF64748B);
+
                                   return Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 6.0),
-                                    child: Row(
-                                      children: [
-                                        const Icon(Icons.domain_outlined, size: 16, color: Colors.grey),
-                                        const SizedBox(width: 8),
-                                        Expanded(
-                                          child: Text(
-                                            b['building']?.toString() ?? '',
-                                            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
+                                    padding: const EdgeInsets.symmetric(vertical: 7.0),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFF8FAFC),
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: const Color(0xFFF1F5F9)),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 24,
+                                            height: 24,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                              color: badgeColor.withValues(alpha: 0.15),
+                                              borderRadius: BorderRadius.circular(6),
+                                            ),
+                                            child: Text(
+                                              '#${idx + 1}',
+                                              style: TextStyle(
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.bold,
+                                                color: badgeColor,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.statusDitugaskan.withValues(alpha: 0.15),
-                                            borderRadius: BorderRadius.circular(12),
+                                          const SizedBox(width: 10),
+                                          Expanded(
+                                            child: Text(
+                                              b['building']?.toString() ?? '',
+                                              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF1E293B)),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
-                                          child: Text(
-                                            '${b['active_reports']} Aktif',
-                                            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.statusDitugaskan),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                                            decoration: BoxDecoration(
+                                              color: badgeColor.withValues(alpha: 0.12),
+                                              borderRadius: BorderRadius.circular(20),
+                                            ),
+                                            child: Text(
+                                              '$activeCount Aduan Aktif',
+                                              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: badgeColor),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   );
-                                }),
+                                })
+                              else
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 16),
+                                  child: Center(
+                                    child: Text('Tidak ada laporan kerusakan aktif.', style: TextStyle(color: Color(0xFF94A3B8), fontSize: 12)),
+                                  ),
+                                ),
                             ],
                           ),
                         ),
