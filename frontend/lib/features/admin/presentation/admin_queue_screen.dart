@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/api/endpoints.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../providers/admin_provider.dart';
@@ -131,7 +132,16 @@ class _AdminQueueScreenState extends State<AdminQueueScreen> {
   void _showCompleteDialog(ReportModel report) {
     final noteController = TextEditingController(text: 'Perbaikan fasilitas selesai dilaksanakan dan diuji aman.');
     PickedPhoto? pickedPhoto;
+    String selectedPresetPath = 'uploads/photos/demo_after_chair.jpg';
+    String selectedPresetLabel = '🪑 Kursi & Meja Diperbaiki';
     bool isSubmitting = false;
+
+    final demoPresets = [
+      {'label': '🪑 Kursi/Meja', 'path': 'uploads/photos/demo_after_chair.jpg'},
+      {'label': '📽️ Proyektor/LCD', 'path': 'uploads/photos/demo_after_projector.jpg'},
+      {'label': '❄️ Pendingin AC', 'path': 'uploads/photos/demo_chair_fixed.jpg'},
+      {'label': '💡 Lampu/Listrik', 'path': 'uploads/photos/demo_projector_good.jpg'},
+    ];
 
     showDialog(
       context: context,
@@ -154,7 +164,7 @@ class _AdminQueueScreenState extends State<AdminQueueScreen> {
             ],
           ),
           content: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 460),
+            constraints: const BoxConstraints(maxWidth: 480),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -184,59 +194,54 @@ class _AdminQueueScreenState extends State<AdminQueueScreen> {
                   ),
                   const SizedBox(height: 16),
                   const Text(
-                    'Foto Bukti Perbaikan (After):',
+                    'Pilih Foto Bukti Perbaikan (After):',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF1E293B)),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 6),
+                  const Text(
+                    'Pilih cepat dari galeri sampel Sarpras (1-Klik) atau unggah dari perangkat:',
+                    style: TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                  ),
+                  const SizedBox(height: 10),
 
-                  // Area Upload Foto Bukti Perbaikan
-                  if (pickedPhoto == null) ...[
-                    InkWell(
-                      onTap: () async {
-                        try {
-                          final files = await FilePicker.pickFiles(
-                            type: FileType.custom,
-                            allowedExtensions: ['jpg', 'jpeg', 'png', 'webp'],
-                          );
-                          if (files.isNotEmpty) {
-                            final file = files.first;
-                            final bytes = await file.readAsBytes();
+                  // Preset Chips (1-Click selection)
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: demoPresets.map((preset) {
+                      final isSelected = pickedPhoto == null && selectedPresetPath == preset['path'];
+                      return ChoiceChip(
+                        label: Text(preset['label']!),
+                        selected: isSelected,
+                        selectedColor: const Color(0xFFDCFCE7),
+                        backgroundColor: const Color(0xFFF8FAFC),
+                        side: BorderSide(
+                          color: isSelected ? const Color(0xFF16A34A) : const Color(0xFFCBD5E1),
+                          width: isSelected ? 1.5 : 1,
+                        ),
+                        labelStyle: TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                          color: isSelected ? const Color(0xFF15803D) : const Color(0xFF334155),
+                        ),
+                        avatar: isSelected ? const Icon(Icons.check, size: 14, color: Color(0xFF16A34A)) : null,
+                        onSelected: (val) {
+                          if (val) {
                             setDialogState(() {
-                              pickedPhoto = PickedPhoto(name: file.name, bytes: bytes);
+                              pickedPhoto = null;
+                              selectedPresetPath = preset['path']!;
+                              selectedPresetLabel = preset['label']!;
                             });
                           }
-                        } catch (e) {
-                          debugPrint('File picker error: $e');
-                        }
-                      },
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF8FAFC),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: const Color(0xFFCBD5E1), style: BorderStyle.solid),
-                        ),
-                        child: Column(
-                          children: [
-                            const Icon(Icons.cloud_upload_outlined, size: 36, color: Color(0xFF2563EB)),
-                            const SizedBox(height: 6),
-                            const Text(
-                              'Klik untuk Unggah Foto Bukti Perbaikan',
-                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF1E3A8A)),
-                            ),
-                            const SizedBox(height: 2),
-                            const Text(
-                              'Format JPG, PNG, atau WebP (Maks. 3 MB)',
-                              style: TextStyle(fontSize: 11, color: Color(0xFF64748B)),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ] else ...[
-                    // Foto Preview Card
+                        },
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 14),
+
+                  // Area Upload Foto / Pratinjau Terpilih
+                  if (pickedPhoto != null) ...[
+                    // Foto Preview Card dari File Komputer
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -250,8 +255,8 @@ class _AdminQueueScreenState extends State<AdminQueueScreen> {
                             borderRadius: BorderRadius.circular(8),
                             child: Image.memory(
                               pickedPhoto!.bytes,
-                              width: 64,
-                              height: 64,
+                              width: 60,
+                              height: 60,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -265,7 +270,7 @@ class _AdminQueueScreenState extends State<AdminQueueScreen> {
                                     Icon(Icons.check_circle_rounded, color: Color(0xFF16A34A), size: 16),
                                     SizedBox(width: 4),
                                     Text(
-                                      'Foto Siap Diunggah',
+                                      'Foto File Terpilih',
                                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF15803D)),
                                     ),
                                   ],
@@ -281,10 +286,81 @@ class _AdminQueueScreenState extends State<AdminQueueScreen> {
                             ),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.delete_outline_rounded, color: Colors.red, size: 20),
-                            tooltip: 'Hapus foto',
+                            icon: const Icon(Icons.close_rounded, color: Colors.red, size: 20),
+                            tooltip: 'Ganti atau hapus foto',
                             onPressed: () {
                               setDialogState(() => pickedPhoto = null);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ] else ...[
+                    // Preview Preset Terpilih + Tombol Unggah File Sendiri
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF8FAFC),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                      ),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              '${Endpoints.uploadsBaseUrl}$selectedPresetPath',
+                              width: 60,
+                              height: 60,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, _, _) => Container(
+                                width: 60,
+                                height: 60,
+                                color: const Color(0xFFE2E8F0),
+                                child: const Icon(Icons.image, color: Color(0xFF94A3B8)),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Bukti: $selectedPresetLabel',
+                                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF1E3A8A)),
+                                ),
+                                const SizedBox(height: 2),
+                                const Text(
+                                  'Siap disertakan ke laporan selesai.',
+                                  style: TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                                ),
+                              ],
+                            ),
+                          ),
+                          OutlinedButton.icon(
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                              side: const BorderSide(color: Color(0xFF93C5FD)),
+                            ),
+                            icon: const Icon(Icons.file_upload_outlined, size: 16, color: Color(0xFF2563EB)),
+                            label: const Text('File Sendiri', style: TextStyle(fontSize: 11, color: Color(0xFF2563EB))),
+                            onPressed: () async {
+                              try {
+                                final files = await FilePicker.pickFiles(
+                                  type: FileType.custom,
+                                  allowedExtensions: ['jpg', 'jpeg', 'png', 'webp'],
+                                );
+                                if (files.isNotEmpty) {
+                                  final file = files.first;
+                                  final bytes = await file.readAsBytes();
+                                  setDialogState(() {
+                                    pickedPhoto = PickedPhoto(name: file.name, bytes: bytes);
+                                  });
+                                }
+                              } catch (e) {
+                                debugPrint('File picker error: $e');
+                              }
                             },
                           ),
                         ],
@@ -317,6 +393,7 @@ class _AdminQueueScreenState extends State<AdminQueueScreen> {
                         report.id,
                         noteController.text.trim(),
                         pickedPhoto,
+                        presetPhotoPath: selectedPresetPath,
                       );
 
                       if (mounted) {

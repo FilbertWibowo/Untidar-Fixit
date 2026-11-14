@@ -45,14 +45,17 @@ $request = new Request();
 // Global CORS Handling
 CorsMiddleware::handle($request);
 
-// Serve static upload images if running via PHP built-in server
+// Serve static upload images with CORS headers
 $uri = $request->getUri();
-if (preg_match('#^/uploads/(photos/.+)$#', $uri, $m)) {
+if (preg_match('#^/(?:api/)?uploads/(.+)$#', $uri, $m)) {
     $filePath = __DIR__ . '/uploads/' . $m[1];
     if (file_exists($filePath)) {
         $ext = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
         $mimes = ['jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'webp' => 'image/webp'];
         if (isset($mimes[$ext])) {
+            header('Access-Control-Allow-Origin: *');
+            header('Access-Control-Allow-Methods: GET, OPTIONS');
+            header('Access-Control-Allow-Headers: *');
             header('Content-Type: ' . $mimes[$ext]);
             header('Content-Length: ' . filesize($filePath));
             header('Cache-Control: public, max-age=86400');

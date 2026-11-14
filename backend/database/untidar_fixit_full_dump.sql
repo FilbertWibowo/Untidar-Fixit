@@ -362,6 +362,16 @@ INSERT INTO `report_upvotes` (`report_id`, `user_id`, `created_at`) VALUES
 (6, 5, NOW()), (6, 6, NOW()), (6, 7, NOW()), (6, 9, NOW()),
 (7, 6, NOW()), (7, 7, NOW()), (7, 8, NOW()), (7, 9, NOW());
 
+-- Report Photos (Before & After Documentation)
+INSERT INTO `report_photos` (`id`, `report_id`, `file_path`, `type`, `uploaded_at`) VALUES
+(1, 1, 'uploads/photos/demo_ac_leak.jpg', 'before', DATE_SUB(NOW(), INTERVAL 2 DAY)),
+(2, 2, 'uploads/photos/demo_chair_broken.jpg', 'before', DATE_SUB(NOW(), INTERVAL 3 DAY)),
+(3, 3, 'uploads/photos/demo_projector_bad.jpg', 'before', DATE_SUB(NOW(), INTERVAL 5 DAY)),
+(4, 3, 'uploads/photos/demo_after_projector.jpg', 'after', DATE_SUB(NOW(), INTERVAL 1 DAY)),
+(5, 4, 'uploads/photos/demo_water_tap.jpg', 'before', DATE_SUB(NOW(), INTERVAL 1 DAY)),
+(6, 5, 'uploads/photos/demo_chair_broken.jpg', 'before', DATE_SUB(NOW(), INTERVAL 1 DAY)),
+(7, 6, 'uploads/photos/demo_ac_leak.jpg', 'before', DATE_SUB(NOW(), INTERVAL 1 DAY));
+
 -- Report Status History
 INSERT INTO `report_status_history` (`report_id`, `status`, `note`, `photo_path`, `changed_by`, `created_at`) VALUES
 (1, 'terkirim', 'Laporan kerusakan AC disampaikan oleh mahasiswa.', NULL, 5, DATE_SUB(NOW(), INTERVAL 2 DAY)),

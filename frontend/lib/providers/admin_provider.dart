@@ -131,7 +131,7 @@ class AdminProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> completeReport(int reportId, String note, PickedPhoto? afterPhoto) async {
+  Future<bool> completeReport(int reportId, String note, PickedPhoto? afterPhoto, {String? presetPhotoPath}) async {
     try {
       final formData = FormData.fromMap({'note': note});
       if (afterPhoto != null) {
@@ -141,6 +141,8 @@ class AdminProvider extends ChangeNotifier {
             MultipartFile.fromBytes(afterPhoto.bytes, filename: afterPhoto.name),
           ),
         );
+      } else if (presetPhotoPath != null && presetPhotoPath.isNotEmpty) {
+        formData.fields.add(MapEntry('photo_path', presetPhotoPath));
       } else {
         // Fallback demo proof photo
         formData.fields.add(const MapEntry('photo_path', 'uploads/photos/demo_after_chair.jpg'));
@@ -152,7 +154,17 @@ class AdminProvider extends ChangeNotifier {
       await fetchDashboardStats();
       return true;
     } catch (e) {
-      _errorMessage = e.toString().replaceFirst('Exception: ', '');
+      if (e is DioException) {
+        if (e.response?.data is Map && e.response?.data['message'] != null) {
+          _errorMessage = e.response!.data['message'].toString();
+        } else if (e.error != null) {
+          _errorMessage = e.error.toString();
+        } else {
+          _errorMessage = e.message ?? 'Gagal menyelesaikan laporan.';
+        }
+      } else {
+        _errorMessage = e.toString().replaceFirst('Exception: ', '');
+      }
       notifyListeners();
       return false;
     }

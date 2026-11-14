@@ -268,15 +268,42 @@ class _ReportDetailScreenState extends State<ReportDetailScreen> {
             const SizedBox(height: 20),
 
             // Photos Section (Before / After Comparison)
+            Row(
+              children: [
+                const Icon(Icons.photo_library_outlined, size: 18, color: Color(0xFF2563EB)),
+                const SizedBox(width: 8),
+                Text('Dokumentasi Foto Fasilitas:', style: AppTypography.headingSmall(theme.colorScheme.onSurface).copyWith(fontSize: 14)),
+              ],
+            ),
+            const SizedBox(height: 10),
             if (report.photos.isNotEmpty) ...[
-              Text('Dokumentasi Foto Fasilitas:', style: AppTypography.headingSmall(theme.colorScheme.onSurface).copyWith(fontSize: 14)),
-              const SizedBox(height: 10),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
                     ...beforePhotos.map((p) => _buildPhotoItem(context, p, 'Sebelum (Before)')),
                     ...afterPhotos.map((p) => _buildPhotoItem(context, p, 'Sesudah Selesai (After)', isAfter: true)),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+            ] else ...[
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF8FAFC),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                ),
+                child: Row(
+                  children: const [
+                    Icon(Icons.info_outline, size: 18, color: Color(0xFF64748B)),
+                    SizedBox(width: 8),
+                    Text(
+                      'Tidak ada foto fisik terlampir pada aduan ini.',
+                      style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                    ),
                   ],
                 ),
               ),
@@ -405,44 +432,145 @@ class _ReportDetailScreenState extends State<ReportDetailScreen> {
     );
   }
 
+  String _getPhotoUrl(String path) {
+    if (path.startsWith('http://') || path.startsWith('https://')) {
+      return path;
+    }
+    final cleanPath = path.startsWith('/') ? path.substring(1) : path;
+    final base = Endpoints.uploadsBaseUrl;
+    final cleanBase = base.endsWith('/') ? base : '$base/';
+    return '$cleanBase$cleanPath';
+  }
+
   Widget _buildPhotoItem(BuildContext context, ReportPhoto photo, String label, {bool isAfter = false}) {
-    return Container(
-      margin: const EdgeInsets.only(right: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              '${Endpoints.uploadsBaseUrl}${photo.filePath}',
-              width: 180,
-              height: 120,
-              fit: BoxFit.cover,
-              errorBuilder: (_, _, _) => Container(
-                width: 180,
-                height: 120,
-                color: Colors.grey.shade200,
-                child: const Center(child: Icon(Icons.broken_image)),
-              ),
+    final photoUrl = _getPhotoUrl(photo.filePath);
+
+    return InkWell(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (ctx) => Dialog(
+            backgroundColor: Colors.transparent,
+            insetPadding: const EdgeInsets.all(16),
+            child: Stack(
+              alignment: Alignment.topRight,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    photoUrl,
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, error, stackTrace) => Container(
+                      padding: const EdgeInsets.all(32),
+                      color: Colors.white,
+                      child: const Text('Gagal memuat gambar resolusi penuh.'),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.black54,
+                    child: IconButton(
+                      icon: const Icon(Icons.close, color: Colors.white),
+                      onPressed: () => Navigator.pop(ctx),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 6),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            decoration: BoxDecoration(
-              color: isAfter ? AppColors.statusSelesai.withValues(alpha: 0.15) : Colors.grey.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(4),
+        );
+      },
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        margin: const EdgeInsets.only(right: 14),
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: isAfter ? const Color(0xFF86EFAC) : const Color(0xFFE2E8F0),
+            width: isAfter ? 1.5 : 1,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.04),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
             ),
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-                color: isAfter ? AppColors.statusSelesai : Colors.grey.shade700,
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                photoUrl,
+                width: 200,
+                height: 140,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    width: 200,
+                    height: 140,
+                    color: const Color(0xFFF1F5F9),
+                    child: const Center(
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
+                  );
+                },
+                errorBuilder: (_, error, stackTrace) => Container(
+                  width: 200,
+                  height: 140,
+                  color: const Color(0xFFF1F5F9),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.photo_outlined, color: Color(0xFF94A3B8), size: 32),
+                      SizedBox(height: 6),
+                      Text('Foto Dokumentasi', style: TextStyle(fontSize: 11, color: Color(0xFF94A3B8))),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: isAfter ? const Color(0xFFDCFCE7) : const Color(0xFFF1F5F9),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    isAfter ? Icons.check_circle_rounded : Icons.photo_camera_rounded,
+                    size: 12,
+                    color: isAfter ? const Color(0xFF15803D) : const Color(0xFF475569),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: isAfter ? const Color(0xFF15803D) : const Color(0xFF334155),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

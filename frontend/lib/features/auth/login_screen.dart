@@ -14,8 +14,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController(text: 'muhammad.asyrof@students.untidar.ac.id');
-  final _passwordController = TextEditingController(text: 'UntidarFixit2026!');
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _rememberUsername = true;
   bool _obscurePassword = true;
 
