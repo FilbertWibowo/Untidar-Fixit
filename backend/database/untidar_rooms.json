@@ -1,0 +1,610 @@
+[
+    {
+        "no": "1",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "2b",
+        "ruang": "A.2b.01",
+        "kapasitas": "40",
+        "luas": "57,60"
+    },
+    {
+        "no": "2",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "2b",
+        "ruang": "A.2b.02",
+        "kapasitas": "40",
+        "luas": "57,60"
+    },
+    {
+        "no": "3",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "2b",
+        "ruang": "A.2b.03",
+        "kapasitas": "40",
+        "luas": "57,60"
+    },
+    {
+        "no": "4",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "2b",
+        "ruang": "A.2b.04",
+        "kapasitas": "40",
+        "luas": "57,60"
+    },
+    {
+        "no": "5",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "2b",
+        "ruang": "A.2b.05",
+        "kapasitas": "40",
+        "luas": "57,60"
+    },
+    {
+        "no": "6",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "2b",
+        "ruang": "A.2b.06",
+        "kapasitas": "40",
+        "luas": "57,60"
+    },
+    {
+        "no": "7",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "3b",
+        "ruang": "A.3b.01",
+        "kapasitas": "40",
+        "luas": "56,00"
+    },
+    {
+        "no": "8",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "3b",
+        "ruang": "A.3b.02",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "9",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "3b",
+        "ruang": "A.3b.03",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "10",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "3b",
+        "ruang": "A.3b.04",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "11",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "3b",
+        "ruang": "A.3b.05",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "12",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "3b",
+        "ruang": "A.3b.06",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "13",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "3b",
+        "ruang": "A.3b.07 (Lab. Komputer)",
+        "kapasitas": "20",
+        "luas": "56,00"
+    },
+    {
+        "no": "14",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "3b",
+        "ruang": "A.3b.08 (ruang kuliah pusat bahasa)",
+        "kapasitas": "30",
+        "luas": "40,00"
+    },
+    {
+        "no": "15",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "3b",
+        "ruang": "A.3b.09",
+        "kapasitas": "25",
+        "luas": "40,00"
+    },
+    {
+        "no": "16",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "4a",
+        "ruang": "A.4a.01",
+        "kapasitas": "30",
+        "luas": "36,00"
+    },
+    {
+        "no": "17",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "4a",
+        "ruang": "A.4a.02",
+        "kapasitas": "40",
+        "luas": "54,00"
+    },
+    {
+        "no": "18",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "4a",
+        "ruang": "A.4a.03",
+        "kapasitas": "40",
+        "luas": "54,00"
+    },
+    {
+        "no": "19",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "4b",
+        "ruang": "A.4b.01",
+        "kapasitas": "40",
+        "luas": "56,00"
+    },
+    {
+        "no": "20",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "4b",
+        "ruang": "A.4b.02",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "21",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "4b",
+        "ruang": "A.4b.03",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "22",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "4b",
+        "ruang": "A.4b.04",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "23",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "4b",
+        "ruang": "A.4b.05",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "24",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "4b",
+        "ruang": "A.4b.06",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "25",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "4b",
+        "ruang": "A.4b.07 (Lab. Komputer)",
+        "kapasitas": "20",
+        "luas": "56,00"
+    },
+    {
+        "no": "26",
+        "gedung": "Fakultas Ekonomi",
+        "lantai": "4b",
+        "ruang": "A.4b.08 (ruang akuakultur)",
+        "kapasitas": "25",
+        "luas": "40,00"
+    },
+    {
+        "no": "27",
+        "gedung": "Fakultas Teknik - 01",
+        "lantai": "1",
+        "ruang": "E.01.1.09 (Lab.Komputer)",
+        "kapasitas": "20",
+        "luas": "76,32"
+    },
+    {
+        "no": "28",
+        "gedung": "Fakultas Teknik-01",
+        "lantai": "2",
+        "ruang": "E.01.2.06",
+        "kapasitas": "40",
+        "luas": "76,23"
+    },
+    {
+        "no": "29",
+        "gedung": "Fakultas Teknik - 01",
+        "lantai": "3",
+        "ruang": "E.01.3.05 (Lab. Komputer)",
+        "kapasitas": "20",
+        "luas": "76,32"
+    },
+    {
+        "no": "30",
+        "gedung": "Fakultas Teknik - 01",
+        "lantai": "3",
+        "ruang": "E.01.3.06 (Lab. Digital)",
+        "kapasitas": "20",
+        "luas": "76,32"
+    },
+    {
+        "no": "31",
+        "gedung": "Fakultas Teknik - 01",
+        "lantai": "3",
+        "ruang": "E.01.3.07 (Lab. Fisika &amp; Elektronika)",
+        "kapasitas": "20",
+        "luas": "76,32"
+    },
+    {
+        "no": "32",
+        "gedung": "Fakultas Teknik - 01",
+        "lantai": "3",
+        "ruang": "E.01.3.08 (Lab. Teknik Tenaga Listrik)",
+        "kapasitas": "20",
+        "luas": "76,32"
+    },
+    {
+        "no": "33",
+        "gedung": "Fakultas Teknik - 01",
+        "lantai": "3",
+        "ruang": "E.01.3.09",
+        "kapasitas": "50",
+        "luas": "76,32"
+    },
+    {
+        "no": "34",
+        "gedung": "Fakultas Teknik - 01",
+        "lantai": "4",
+        "ruang": "E.01.4.05",
+        "kapasitas": "50",
+        "luas": "76,32"
+    },
+    {
+        "no": "35",
+        "gedung": "Fakultas Teknik - 01",
+        "lantai": "4",
+        "ruang": "E.01.4.06",
+        "kapasitas": "50",
+        "luas": "76,32"
+    },
+    {
+        "no": "36",
+        "gedung": "Fakultas Teknik - 01",
+        "lantai": "4",
+        "ruang": "E.01.4.07",
+        "kapasitas": "50",
+        "luas": "76,32"
+    },
+    {
+        "no": "37",
+        "gedung": "Fakultas Teknik - 01",
+        "lantai": "4",
+        "ruang": "E.01.4.08",
+        "kapasitas": "50",
+        "luas": "76,32"
+    },
+    {
+        "no": "38",
+        "gedung": "Fakultas Teknik - 01",
+        "lantai": "4",
+        "ruang": "E.01.4.09",
+        "kapasitas": "50",
+        "luas": "76,32"
+    },
+    {
+        "no": "39",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "1",
+        "ruang": "E.02.1.01 ( Lab. Mesin S1 )",
+        "kapasitas": "0",
+        "luas": "66,96"
+    },
+    {
+        "no": "40",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "1",
+        "ruang": "E.02.1.02 ( Lab. Mesin S1 )",
+        "kapasitas": "0",
+        "luas": "66,96"
+    },
+    {
+        "no": "41",
+        "gedung": "Fakultas Teknik -  02",
+        "lantai": "1",
+        "ruang": "E.02.1.03 ( Lab. Mesin D3 )",
+        "kapasitas": "0",
+        "luas": "66,96"
+    },
+    {
+        "no": "42",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "1",
+        "ruang": "E.02.1.04 ( Lab. Mesin D3 )",
+        "kapasitas": "0",
+        "luas": "66,96"
+    },
+    {
+        "no": "43",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "1",
+        "ruang": "E.02.1.05 ( Lab. Teknik Sipil )",
+        "kapasitas": "0",
+        "luas": "66,96"
+    },
+    {
+        "no": "44",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "2",
+        "ruang": "E.02.2.06",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "45",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "2",
+        "ruang": "E.02.2.08",
+        "kapasitas": "50",
+        "luas": "76,32"
+    },
+    {
+        "no": "46",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "2",
+        "ruang": "E.02.2.09",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "47",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "2",
+        "ruang": "E.02.2.10",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "48",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "3",
+        "ruang": "E.02.3.06",
+        "kapasitas": "80",
+        "luas": "115,20"
+    },
+    {
+        "no": "49",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "3",
+        "ruang": "E.02.3.08",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "50",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "3",
+        "ruang": "E.02.3.09",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "51",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "4",
+        "ruang": "E.02.4.06",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "52",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "4",
+        "ruang": "E.02.4.07",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "53",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "4",
+        "ruang": "E.02.4.08",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "54",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "4",
+        "ruang": "E.02.4.09",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "55",
+        "gedung": "Fakultas Teknik - 02",
+        "lantai": "4",
+        "ruang": "E.02.4.10",
+        "kapasitas": "50",
+        "luas": "57,60"
+    },
+    {
+        "no": "56",
+        "gedung": "Gedung Fakultas Teknik 3",
+        "lantai": "4",
+        "ruang": "E03.3.03",
+        "kapasitas": "50",
+        "luas": "-"
+    },
+    {
+        "no": "57",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "1",
+        "ruang": "I.1.09.A(Lab. Microteaching-1)",
+        "kapasitas": "20",
+        "luas": "56,00"
+    },
+    {
+        "no": "58",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "1",
+        "ruang": "I.1.09.B(Lab. Microteaching-2)",
+        "kapasitas": "20",
+        "luas": "56,00"
+    },
+    {
+        "no": "59",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "1",
+        "ruang": "I.1.8 (Lab. Bahasa FKIP)",
+        "kapasitas": "25",
+        "luas": "56,00"
+    },
+    {
+        "no": "60",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "2",
+        "ruang": "I.2.08",
+        "kapasitas": "40",
+        "luas": "56,00"
+    },
+    {
+        "no": "61",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "1",
+        "ruang": "I1.06",
+        "kapasitas": "50",
+        "luas": "56,00"
+    },
+    {
+        "no": "62",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "2",
+        "ruang": "I2.01",
+        "kapasitas": "50",
+        "luas": "56,00"
+    },
+    {
+        "no": "63",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "2",
+        "ruang": "I2.02",
+        "kapasitas": "50",
+        "luas": "56,00"
+    },
+    {
+        "no": "64",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "2",
+        "ruang": "I2.03",
+        "kapasitas": "50",
+        "luas": "56,00"
+    },
+    {
+        "no": "65",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "2",
+        "ruang": "I2.04",
+        "kapasitas": "50",
+        "luas": "56,00"
+    },
+    {
+        "no": "66",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "2",
+        "ruang": "I2.05",
+        "kapasitas": "50",
+        "luas": "56,00"
+    },
+    {
+        "no": "67",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "2",
+        "ruang": "I2.06 (Lab. MIPA)",
+        "kapasitas": "50",
+        "luas": "56,00"
+    },
+    {
+        "no": "68",
+        "gedung": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "lantai": "2",
+        "ruang": "I2.07",
+        "kapasitas": "50",
+        "luas": "56,00"
+    },
+    {
+        "no": "69",
+        "gedung": "Fakultas Ilmu Sosial dan Ilmu Politik",
+        "lantai": "1",
+        "ruang": "J.1.04",
+        "kapasitas": "40",
+        "luas": "56,00"
+    },
+    {
+        "no": "70",
+        "gedung": "Fakultas Ilmu Sosial dan Ilmu Politik",
+        "lantai": "2",
+        "ruang": "J.2.01",
+        "kapasitas": "40",
+        "luas": "56,00"
+    },
+    {
+        "no": "71",
+        "gedung": "Fakultas Ilmu Sosial dan Ilmu Politik",
+        "lantai": "2",
+        "ruang": "J.2.02",
+        "kapasitas": "40",
+        "luas": "56,00"
+    },
+    {
+        "no": "72",
+        "gedung": "Fakultas Ilmu Sosial dan Ilmu Politik",
+        "lantai": "2",
+        "ruang": "J.2.03",
+        "kapasitas": "40",
+        "luas": "56,00"
+    },
+    {
+        "no": "73",
+        "gedung": "Fakultas Pertanian",
+        "lantai": "2",
+        "ruang": "L.2.03",
+        "kapasitas": "10",
+        "luas": "78,00"
+    },
+    {
+        "no": "74",
+        "gedung": "Fakultas Pertanian",
+        "lantai": "2",
+        "ruang": "P.2.01 (Lab. Pertanian)",
+        "kapasitas": "40",
+        "luas": "78,00"
+    },
+    {
+        "no": "75",
+        "gedung": "Fakultas Pertanian",
+        "lantai": "2",
+        "ruang": "P.2.02 (Lab. Tanah)",
+        "kapasitas": "40",
+        "luas": "78,00"
+    },
+    {
+        "no": "76",
+        "gedung": "Fakultas Pertanian",
+        "lantai": "2",
+        "ruang": "P.2.03 (Lab. Hama)",
+        "kapasitas": "40",
+        "luas": "78,00"
+    }
+]
